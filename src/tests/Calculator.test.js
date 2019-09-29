@@ -44,4 +44,20 @@ describe("<Calculator />", () => {
         expect(wrapper.find("p#sum").text()).toEqual("15");
         expect(wrapper.find("p#equation").text()).toEqual("15 + 0 = 15");
     });    
+
+    it("Should update equation <p> to include ' + 0' when a value is entered without delimiter", () => {
+        const wrapper = mount(<Calculator />);   
+        wrapper.find("input").getDOMNode().value = "755";
+        wrapper.find("input").simulate("change");       
+        wrapper.find("button[type='submit']").simulate("submit");
+        expect(wrapper.find("p#equation").text()).toEqual("755 + 0 = 755");
+    });
+
+    it("Should update equation <p> to include '0 + ' when a single value is entered starting with delimiter", () => {
+        const wrapper = mount(<Calculator />);   
+        wrapper.find("input").getDOMNode().value = ",23";
+        wrapper.find("input").simulate("change");       
+        wrapper.find("button[type='submit']").simulate("submit");
+        expect(wrapper.find("p#equation").text()).toEqual("0 + 23 = 23");
+    });
 });

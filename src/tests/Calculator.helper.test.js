@@ -73,4 +73,55 @@ describe("Calculator.helper.js", () => {
             expect(result).toStrictEqual(expected);
         });
     });
+
+    describe("getEquation", () => {
+        it("Should return '10 + 0' when valuesEntered is [10]", () => {
+            const expected = "10 + 0";
+            const value = 10, equation = "", valuesEntered = [10], index = 0;
+            const result = CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("Should return '10 + 20 + ' when valuesEntered is [10, 20, 30] and index is 1", () => {
+            const expected = "10 + 20 + ";
+            const value = 20, equation = "10 + ", valuesEntered = [10, 20, 30], index = 1;
+            const result = CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("Should return '10 + 20 + 30 ' when valuesEntered is [10, 20, 30] and index is 2", () => {
+            const expected = "10 + 20 + 30";
+            const value = 30, equation = "10 + 20 + ", valuesEntered = [10, 20, 30], index = 2;
+            const result = CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("Should throw error for non-number value", () => {
+            const expected = "Invalid parameters. Parameters must be: {value: number, equation: string, valuesEntered: array, index: number}.";
+            const value = "20", equation = "10 + ", valuesEntered = [10, 20, 30], index = 1;
+            const result = () => CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+            expect(result).toThrowError(expected);
+        });
+
+        it("Should throw error for non-string equation", () => {
+            const expected = "Invalid parameters. Parameters must be: {value: number, equation: string, valuesEntered: array, index: number}.";
+            const value = 20, equation = 10, valuesEntered = [10, 20, 30], index = 1;
+            const result = () => CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+            expect(result).toThrowError(expected);
+        });
+
+        it("Should throw error for non-array valuesEntered", () => {
+            const expected = "Invalid parameters. Parameters must be: {value: number, equation: string, valuesEntered: array, index: number}.";
+            const value = 20, equation = "10 + ", valuesEntered = undefined, index = 1;
+            const result = () => CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+            expect(result).toThrowError(expected);
+        });
+
+        it("Should throw error for non-number index", () => {
+            const expected = "Invalid parameters. Parameters must be: {value: number, equation: string, valuesEntered: array, index: number}.";
+            const value = 20, equation = "10 + ", valuesEntered = [10, 20, 30], index = undefined;
+            const result = () => CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+            expect(result).toThrowError(expected);
+        });
+    });
 });

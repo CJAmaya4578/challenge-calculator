@@ -16,13 +16,13 @@ class Calculator extends Component{
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onInputChange({currentTarget}) {
+    onInputChange({ currentTarget }) {
         this.setState({            
             inputValue: currentTarget.value
         });
     }
 
-    onCalcButtonClick({currentTarget}) {
+    onCalcButtonClick({ currentTarget }) {
         const {inputValue} = this.state;
         this.setState({
             inputValue: inputValue + currentTarget.value
@@ -31,14 +31,18 @@ class Calculator extends Component{
 
     onSubmit(event) {
         event.preventDefault();
-        const {inputValue} = this.state;        
-        const valuesEntered = CalculatorHelper.parse(inputValue, ',');
-        const firstValue = CalculatorHelper.isNumber(valuesEntered[0]);
-        const secondValue = CalculatorHelper.isNumber(valuesEntered[1]);
-        const sum = firstValue + secondValue;
+        const { inputValue } = this.state;        
+        const valuesEntered = CalculatorHelper.parse(inputValue, ",");
+        let sum = 0; 
+        let equation = "";
+        valuesEntered.forEach((value, index) => {
+            value = CalculatorHelper.isNumber(value);
+            sum += value;
+            equation = CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+        });
         this.setState({            
             sum: sum,
-            equation: firstValue + ' + ' + secondValue + ' = ' + sum
+            equation: `${equation} = ${sum}`
         });
     }
 
