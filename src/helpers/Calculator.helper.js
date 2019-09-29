@@ -6,12 +6,13 @@
  */ 
 const parse = (input, stringDelimiter) => {    
     if (typeof(input) === "string" && typeof(stringDelimiter) === "string") {
-        return input.split(stringDelimiter);
+        const delimiterRegex = new RegExp(stringDelimiter, "g")        
+        return input.split(delimiterRegex);
     } else {
         throw new Error("Invalid input. Parameters must both be strings.");
     }
 }
- /**
+/**
   * @description Returns a number of the input if it is a valid string representation
   * of a number. Otherwise, 0 is returned
   * @param {string} input 

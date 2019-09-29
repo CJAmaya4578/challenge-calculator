@@ -31,8 +31,9 @@ class Calculator extends Component{
 
     onSubmit(event) {
         event.preventDefault();
-        const { inputValue } = this.state;        
-        const valuesEntered = CalculatorHelper.parse(inputValue, ",");
+        const { inputValue } = this.state;
+        const delimiters = ["\\\\n", ","];
+        const valuesEntered = CalculatorHelper.parse(inputValue, delimiters.join("|"));
         let sum = 0; 
         let equation = "";
         valuesEntered.forEach((value, index) => {

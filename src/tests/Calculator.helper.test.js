@@ -24,7 +24,16 @@ describe("Calculator.helper.js", () => {
             expect(typeof(result)).toBe('object');
             expect(result.length).toBe(5);
             expect(result).toStrictEqual(expected);
-        });        
+        });
+        
+        it("Should split '1\\n2,3' by '\\n' and ',' and return ['1', '2', '3']", () => {
+            const expected = ['1', '2', '3'];
+            const delimiters = ["\\\\n", ","];
+            const result = CalculatorHelper.parse('1\\n2,3', delimiters.join("|"));
+            expect(typeof(result)).toBe('object');
+            expect(result.length).toBe(3);
+            expect(result).toStrictEqual(expected);
+        });         
 
         it("Should throw error for non-string input", () => {
             const result = () => CalculatorHelper.parse(undefined, '54');
