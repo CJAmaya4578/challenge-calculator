@@ -133,4 +133,55 @@ describe("Calculator.helper.js", () => {
             expect(result).toThrowError(expected);
         });
     });
+
+    describe("getNegativeNumbers", () => {
+        it("Should return false for 2", () => {
+            const expected = false;
+            const value = 2, negativeNumbersFound = [], index = 0, valuesEntered = [2, 20, 30];
+            const result = CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
+                index, valuesEntered);
+            expect(result).toEqual(expected);
+        });
+
+        it("Should return false for 0", () => {
+            const expected = false;
+            const value = 0, negativeNumbersFound = [], index = 1, valuesEntered = [1, 0];
+            const result = CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
+                index, valuesEntered);
+            expect(result).toBe(expected);
+        });
+
+        it("Should return true for -5, negativeNumbersFound should be length of 2", () => {
+            const expected = true;
+            const value = -5, negativeNumbersFound = [-4], index = 0, valuesEntered = [-5, 20, 30];
+            const result = CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
+                index, valuesEntered);
+            expect(result).toBe(expected);
+            expect(negativeNumbersFound).toHaveLength(2);
+        });
+
+        it("Should throw error for invalid value param", () => {
+            const expected = "Invalid parameters. Parameters must be: {value: number, negativeNumbersFound: array, index: number, valuesEntered: array}.";
+            const value = "", negativeNumbersFound = [-4], index = 0, valuesEntered = [-5, 20, 30];
+            const result = () => CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
+                index, valuesEntered);
+            expect(result).toThrowError(expected);
+        });
+
+        it("Should throw error for final index being negative", () => {
+            const expected = "Negative numbers found. -4 -30";
+            const value = -30, negativeNumbersFound = [-4], index = 2, valuesEntered = [10, 20, -30];
+            const result = () => CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
+                index, valuesEntered);
+            expect(result).toThrowError(expected);
+        });
+
+        it("Should throw error for final index being positive", () => {
+            const expected = "Negative numbers found. -4";
+            const value = 20, negativeNumbersFound = [-4], index = 1, valuesEntered = [10, 20];
+            const result = () => CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
+                index, valuesEntered);
+            expect(result).toThrowError(expected);
+        });
+    })
 });

@@ -30,21 +30,30 @@ class Calculator extends Component{
     }
 
     onSubmit(event) {
-        event.preventDefault();
-        const { inputValue } = this.state;
-        const delimiters = ["\\\\n", ","];
-        const valuesEntered = CalculatorHelper.parse(inputValue, delimiters.join("|"));
-        let sum = 0; 
-        let equation = "";
-        valuesEntered.forEach((value, index) => {
-            value = CalculatorHelper.isNumber(value);
-            sum += value;
-            equation = CalculatorHelper.getEquation(value, equation, valuesEntered, index);
-        });
-        this.setState({            
-            sum: sum,
-            equation: `${equation} = ${sum}`
-        });
+        try {
+            event.preventDefault();
+            const { inputValue } = this.state;
+            const delimiters = ["\\\\n", ","];
+            const valuesEntered = CalculatorHelper.parse(inputValue, delimiters.join("|"));
+            let sum = 0; 
+            let equation = "";
+            let negativeNumbersFound = [];
+            valuesEntered.forEach((value, index) => {
+                value = CalculatorHelper.isNumber(value);
+                const negativeFound =  CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
+                    index, valuesEntered);
+                if (!negativeFound) {
+                    sum += value;
+                    equation = CalculatorHelper.getEquation(value, equation, valuesEntered, index);
+                } 
+            });
+            this.setState({            
+                sum: sum,
+                equation: `${equation} = ${sum}`
+            });
+        } catch(e) {
+            alert(e.message);
+        }
     }
 
     render() {

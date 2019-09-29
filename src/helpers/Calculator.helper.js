@@ -50,8 +50,27 @@ const getEquation = (value, equation, valuesEntered, index) => {
     }
 }
 
+const getNegativeNumbers = (value, negativeNumbersFound, index, valuesEntered) => {
+    if (typeof(value) === "number" && Array.isArray(negativeNumbersFound) 
+        && typeof(index) === "number" && Array.isArray(valuesEntered)) {
+        if (value < 0) {
+            negativeNumbersFound.push(value);
+            if (index !== valuesEntered.length-1) {
+                return true;
+            }
+        } 
+        if (index === valuesEntered.length-1 && negativeNumbersFound.length > 0) {
+            throw new Error(`Negative numbers found. ${negativeNumbersFound.join(" ")}`);
+        }
+        return false;
+    } else {
+        throw new Error("Invalid parameters. Parameters must be: {value: number, negativeNumbersFound: array, index: number, valuesEntered: array}.");
+    }
+}
+
 export default {
     parse: parse,
     isNumber: isNumber,
     getEquation: getEquation,
+    getNegativeNumbers: getNegativeNumbers,
 }
