@@ -60,4 +60,13 @@ describe("<Calculator />", () => {
         wrapper.find("button[type='submit']").simulate("submit");
         expect(wrapper.find("p#equation").text()).toEqual("0 + 23 = 23");
     });
+
+    it("Should update error <p> to display error message.", () => {
+        const wrapper = mount(<Calculator />);   
+        wrapper.find("input").getDOMNode().value = "-1,23,5";
+        wrapper.find("input").simulate("change");       
+        wrapper.find("button[type='submit']").simulate("submit");
+        expect(wrapper.state().errorMessage).toEqual("Negative numbers found. -1");
+        expect(wrapper.find("p#error").text()).toEqual("Negative numbers found. -1");
+    });
 });

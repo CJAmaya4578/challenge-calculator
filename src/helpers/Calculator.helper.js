@@ -51,6 +51,15 @@ const getEquation = (value, equation, valuesEntered, index) => {
     }
 }
 
+/**
+ * @description Pushes negative values to negativeNumbersFound array. Returns true if current value
+ * is negative, fase otherwise. Throws error if valuesEntered array has been evaluated completely 
+ * and at least one negative number was found. Throws error for invalid params.
+ * @param {number} value 
+ * @param {array} negativeNumbersFound 
+ * @param {number} index 
+ * @param {array} valuesEntered 
+ */
 const getNegativeNumbers = (value, negativeNumbersFound, index, valuesEntered) => {
     if (typeof(value) === "number" && Array.isArray(negativeNumbersFound) 
         && typeof(index) === "number" && Array.isArray(valuesEntered)) {
@@ -69,9 +78,34 @@ const getNegativeNumbers = (value, negativeNumbersFound, index, valuesEntered) =
     }
 }
 
+/**
+ * @description Adds custome delimiter to delimiters array. Returns substring of input value 
+ * containig numbers only.
+ * @param {string} inputValue 
+ * @param {array} delimiters 
+ */
+const setCustomDelimiter = (inputValue, delimiters) => {
+    if (typeof(inputValue) === "string" && Array.isArray(delimiters)){
+        if (inputValue.startsWith("//")) {
+            const endOfCustomDelimiter = inputValue.indexOf("\\n");
+            if (endOfCustomDelimiter >= 0) {
+                const customDelimiter = inputValue.substring(2, endOfCustomDelimiter);
+                if (customDelimiter.length === 1) {
+                    delimiters.push(customDelimiter.replace("\\", "\\\\"));
+                    return inputValue.substring(endOfCustomDelimiter + 2);
+                }
+            }
+        }
+        return inputValue;
+    } else {
+        throw new Error("Invalid parameters. Parameters must be: {inputValue: string, delimiters: array}.");
+    }
+}
+
 export default {
     parse: parse,
     isValidNumber: isValidNumber,
     getEquation: getEquation,
     getNegativeNumbers: getNegativeNumbers,
+    setCustomDelimiter: setCustomDelimiter,
 }

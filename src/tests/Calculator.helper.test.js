@@ -197,5 +197,44 @@ describe("Calculator.helper.js", () => {
                 index, valuesEntered);
             expect(result).toThrowError(expected);
         });
-    })
+    });
+
+    describe("setCustomDelimiter", () => {
+        it("Should return substring 1,2\\3\n5 for custom delimiter \\ and have delimiters length 3", () => {
+            const expectedDelimiters = ["\\\\n", ",", "\\\\"];
+            const expectedSubstring = "1,2\\3\\n5";            
+            // Value in UI wil be "//\\n1,2\3\n5"
+            const inputValue = "//\\\\n1,2\\3\\n5", delimiters = ["\\\\n", ","]; 
+            const result = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
+            expect(result).toEqual(expectedSubstring);
+            expect(delimiters).toEqual(expectedDelimiters);
+        });
+
+        it("Should return inputValue for value //1,3 and not update delimiters", () => {
+            const expectedDelimiters = ["\\\\n", ","];
+            const expectedSubstring = "//1,3";            
+            // Value in UI wil be "//1,3"
+            const inputValue = "//1,3", delimiters = ["\\\\n", ","]; 
+            const result = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
+            expect(result).toEqual(expectedSubstring);
+            expect(delimiters).toEqual(expectedDelimiters);
+        });
+
+        it("Should return inputValue for value //we\\n1,3we4 and not update delimiters", () => {
+            const expectedDelimiters = ["\\\\n", ","];
+            const expectedSubstring = "//we\\n1,3we4";            
+            // Value in UI wil be "//we\n1,3we4"
+            const inputValue = "//we\\n1,3we4", delimiters = ["\\\\n", ","]; 
+            const result = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
+            expect(result).toEqual(expectedSubstring);
+            expect(delimiters).toEqual(expectedDelimiters);
+        });
+
+        it("Should throw error invalid param", () => {
+            const expected = "Invalid parameters. Parameters must be: {inputValue: string, delimiters: array}.";
+            const inputValue = undefined, delimiters = ["\\\\n", ","];
+            const result = () => CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
+            expect(result).toThrowError(expected);
+        });
+    });
 });

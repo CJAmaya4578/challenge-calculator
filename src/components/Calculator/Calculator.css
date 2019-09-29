@@ -19,3 +19,7 @@
 #calculator p {
     margin: 0;
 }
+
+#calculator #error {
+    color: red;
+}

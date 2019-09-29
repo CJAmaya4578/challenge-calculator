@@ -9,7 +9,8 @@ class Calculator extends Component{
         this.state = {
             sum: 0,
             equation: "",
-            inputValue: ""
+            inputValue: "",
+            errorMessage: "",
         };
         this.onInputChange = this.onInputChange.bind(this);
         this.onCalcButtonClick = this.onCalcButtonClick.bind(this);
@@ -34,7 +35,8 @@ class Calculator extends Component{
             event.preventDefault();
             const { inputValue } = this.state;
             const delimiters = ["\\\\n", ","];
-            const valuesEntered = CalculatorHelper.parse(inputValue, delimiters.join("|"));
+            const numberValues = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
+            const valuesEntered = CalculatorHelper.parse(numberValues, delimiters.join("|"));
             let sum = 0; 
             let equation = "";
             let negativeNumbersFound = [];
@@ -49,10 +51,11 @@ class Calculator extends Component{
             });
             this.setState({            
                 sum: sum,
-                equation: `${equation} = ${sum}`
+                equation: `${equation} = ${sum}`,
+                errorMessage: ""
             });
-        } catch(e) {
-            alert(e.message);
+        } catch(e) {            
+            this.setState({ errorMessage: e.message });
         }
     }
 
@@ -60,7 +63,8 @@ class Calculator extends Component{
         const {
             sum,
             equation,
-            inputValue
+            inputValue,
+            errorMessage
         } = this.state;
         return (
             <div id="calculator">
@@ -89,6 +93,7 @@ class Calculator extends Component{
                 </form>                 
                 <p id="sum">{sum}</p>
                 <p id="equation">{equation}</p>
+                <p id="error">{errorMessage}</p>
             </div>
         );
     }
