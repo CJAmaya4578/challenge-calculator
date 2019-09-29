@@ -39,7 +39,7 @@ class Calculator extends Component{
             let equation = "";
             let negativeNumbersFound = [];
             valuesEntered.forEach((value, index) => {
-                value = CalculatorHelper.isNumber(value);
+                value = CalculatorHelper.isValidNumber(value);
                 const negativeFound =  CalculatorHelper.getNegativeNumbers(value, negativeNumbersFound, 
                     index, valuesEntered);
                 if (!negativeFound) {

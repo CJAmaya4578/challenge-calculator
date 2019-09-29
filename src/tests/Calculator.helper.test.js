@@ -46,38 +46,52 @@ describe("Calculator.helper.js", () => {
         });
     });
 
-    describe("isNumber", () => {
+    describe("isValidNumber", () => {
         it("Should return 34 for input '34'", () => {
             const expected = 34;
-            const result = CalculatorHelper.isNumber('34');
+            const result = CalculatorHelper.isValidNumber('34');
             expect(typeof(result)).toBe('number');
             expect(result).toStrictEqual(expected);
         });
 
         it("Should return -8 for input '-8'", () => {
             const expected = -8;
-            const result = CalculatorHelper.isNumber('-8');
+            const result = CalculatorHelper.isValidNumber('-8');
             expect(typeof(result)).toBe('number');
             expect(result).toStrictEqual(expected);
         });
 
         it("Should return 0 for input '!2d'", () => {
             const expected = 0;
-            const result = CalculatorHelper.isNumber('!2d');
+            const result = CalculatorHelper.isValidNumber('!2d');
             expect(typeof(result)).toBe('number');
             expect(result).toStrictEqual(expected);
         });
 
         it("Should return 0 for non-string input undefined", () => {
             const expected = 0;
-            const result = CalculatorHelper.isNumber(undefined);
+            const result = CalculatorHelper.isValidNumber(undefined);
             expect(typeof(result)).toBe('number');
             expect(result).toStrictEqual(expected);
         });
         
         it("Should return 0 for input ''", () => {
             const expected = 0;
-            const result = CalculatorHelper.isNumber('');
+            const result = CalculatorHelper.isValidNumber('');
+            expect(typeof(result)).toBe('number');
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("Should return 0 for input '1001'", () => {
+            const expected = 0;
+            const result = CalculatorHelper.isValidNumber("1001");
+            expect(typeof(result)).toBe('number');
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("Should return 1000 for input '1000'", () => {
+            const expected = 1000;
+            const result = CalculatorHelper.isValidNumber("1000");
             expect(typeof(result)).toBe('number');
             expect(result).toStrictEqual(expected);
         });

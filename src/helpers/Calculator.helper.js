@@ -14,13 +14,14 @@ const parse = (input, stringDelimiter) => {
 }
 /**
   * @description Returns a number of the input if it is a valid string representation
-  * of a number. Otherwise, 0 is returned
+  * of a number and is less than or equal to 1000. Otherwise, 0 is returned
   * @param {string} input 
   */
-const isNumber = (input) => {
+const isValidNumber = (input) => {
     const numberRegEx = new RegExp(/^-?\d+$/);
     if (typeof(input) === "string" && numberRegEx.test(input)){
-        return parseInt(input, 10);
+        const number = parseInt(input, 10);
+        return (number <= 1000) ? number : 0;
     } 
     return 0;
 }
@@ -70,7 +71,7 @@ const getNegativeNumbers = (value, negativeNumbersFound, index, valuesEntered) =
 
 export default {
     parse: parse,
-    isNumber: isNumber,
+    isValidNumber: isValidNumber,
     getEquation: getEquation,
     getNegativeNumbers: getNegativeNumbers,
 }
