@@ -1,0 +1,21 @@
+#calculator {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: 200px;
+}
+
+#calculator input {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#calculator #numberInputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#calculator p {
+    margin: 0;
+}
