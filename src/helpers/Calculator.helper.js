@@ -87,13 +87,14 @@ const getNegativeNumbers = (value, negativeNumbersFound, index, valuesEntered) =
 const setCustomDelimiter = (inputValue, delimiters) => {
     if (typeof(inputValue) === "string" && Array.isArray(delimiters)){
         if (inputValue.startsWith("//")) {
-            const endOfCustomDelimiter = inputValue.indexOf("\\n");
+            const endOfCustomDelimiter = inputValue.indexOf("]\\n");
             if (endOfCustomDelimiter >= 0) {
-                const customDelimiter = inputValue.substring(2, endOfCustomDelimiter);
-                if (customDelimiter.length === 1) {
-                    delimiters.push(customDelimiter.replace("\\", "\\\\"));
-                    return inputValue.substring(endOfCustomDelimiter + 2);
-                }
+                let customDelimiter = inputValue.substring(2, endOfCustomDelimiter + 1);
+                customDelimiter = customDelimiter.substring(1, customDelimiter.length-1);
+                const escapeRegex = new RegExp(/[.,[\]{}()*+-?\\^$|#\s]/, "g");
+                const escapedDelimiter = customDelimiter.replace(escapeRegex, "\\$&")
+                delimiters.push(escapedDelimiter);
+                return inputValue.substring(endOfCustomDelimiter + 3);
             }
         }
         return inputValue;

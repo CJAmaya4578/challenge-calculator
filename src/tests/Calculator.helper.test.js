@@ -200,11 +200,11 @@ describe("Calculator.helper.js", () => {
     });
 
     describe("setCustomDelimiter", () => {
-        it("Should return substring 1,2\\3\n5 for custom delimiter \\ and have delimiters length 3", () => {
+        it("Should return substring 1,2\\3\n5 with custom delimiter \\ and have delimiters length 3", () => {
             const expectedDelimiters = ["\\\\n", ",", "\\\\"];
             const expectedSubstring = "1,2\\3\\n5";            
-            // Value in UI wil be "//\\n1,2\3\n5"
-            const inputValue = "//\\\\n1,2\\3\\n5", delimiters = ["\\\\n", ","]; 
+            // Value in UI wil be "//[\]\n1,2\3\n5"
+            const inputValue = "//[\\]\\n1,2\\3\\n5", delimiters = ["\\\\n", ","]; 
             const result = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
             expect(result).toEqual(expectedSubstring);
             expect(delimiters).toEqual(expectedDelimiters);
@@ -220,11 +220,11 @@ describe("Calculator.helper.js", () => {
             expect(delimiters).toEqual(expectedDelimiters);
         });
 
-        it("Should return inputValue for value //we\\n1,3we4 and not update delimiters", () => {
-            const expectedDelimiters = ["\\\\n", ","];
-            const expectedSubstring = "//we\\n1,3we4";            
-            // Value in UI wil be "//we\n1,3we4"
-            const inputValue = "//we\\n1,3we4", delimiters = ["\\\\n", ","]; 
+        it("Should return substring 1,3we4 with custom delimiter we and delimiter length should be 3", () => {
+            const expectedDelimiters = ["\\\\n", ",", "we"];
+            const expectedSubstring = "1,3we4";            
+            // Value in UI wil be "//[we]\n1,3we4"
+            const inputValue = "//[we]\\n1,3we4", delimiters = ["\\\\n", ","]; 
             const result = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
             expect(result).toEqual(expectedSubstring);
             expect(delimiters).toEqual(expectedDelimiters);
