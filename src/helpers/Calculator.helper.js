@@ -12,6 +12,7 @@ const parse = (input, stringDelimiter) => {
         throw new Error("Invalid input. Parameters must both be strings.");
     }
 }
+
 /**
   * @description Returns a number of the input if it is a valid string representation
   * of a number and is less than or equal to 1000. Otherwise, 0 is returned
@@ -89,11 +90,13 @@ const setCustomDelimiter = (inputValue, delimiters) => {
         if (inputValue.startsWith("//[")) {
             const endOfCustomDelimiter = inputValue.indexOf("]\\n");
             if (endOfCustomDelimiter >= 0) {
-                let customDelimiter = inputValue.substring(3, endOfCustomDelimiter);
-                customDelimiter = customDelimiter.substring(0, customDelimiter.length);
                 const escapeRegex = new RegExp(/[-[\]{}()*+?.,\\^$|#\s]/, "g");
-                const escapedDelimiter = customDelimiter.replace(escapeRegex, "\\$&")
-                delimiters.push(escapedDelimiter);
+                let customDelimiter = inputValue.substring(3, endOfCustomDelimiter);
+                const newDelimiters = customDelimiter.split("][");
+                newDelimiters.forEach((delimiter) => {
+                    const escapedDelimiter = delimiter.replace(escapeRegex, "\\$&")
+                    delimiters.push(escapedDelimiter);
+                });
                 return inputValue.substring(endOfCustomDelimiter + 3);
             }
         }

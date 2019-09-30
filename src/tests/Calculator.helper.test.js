@@ -240,6 +240,16 @@ describe("Calculator.helper.js", () => {
             expect(delimiters).toEqual(expectedDelimiters);
         });
 
+        it("Should return substring 1,3we4are2 with custom delimiter [we][*] and delimiter length should be 4", () => {
+            const expectedDelimiters = ["\\\\n", ",", "we", "\\*"];
+            const expectedSubstring = "1,3we4*2";
+            // Value in UI wil be "//[we][*]\n1,3we4*2"
+            const inputValue = "//[we][*]\\n1,3we4*2", delimiters = ["\\\\n", ","]; 
+            const result = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
+            expect(result).toEqual(expectedSubstring);
+            expect(delimiters).toEqual(expectedDelimiters);
+        });
+
         it("Should throw error invalid param", () => {
             const expected = "Invalid parameters. Parameters must be: {inputValue: string, delimiters: array}.";
             const inputValue = undefined, delimiters = ["\\\\n", ","];
