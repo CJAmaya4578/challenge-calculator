@@ -220,6 +220,16 @@ describe("Calculator.helper.js", () => {
             expect(delimiters).toEqual(expectedDelimiters);
         });
 
+        it("Should return inputValue for value //1]\\n,3 and not update delimiters", () => {
+            const expectedDelimiters = ["\\\\n", ","];
+            const expectedSubstring = "//1]\\n,3";            
+            // Value in UI wil be "//1]\n,3"
+            const inputValue = "//1]\\n,3", delimiters = ["\\\\n", ","]; 
+            const result = CalculatorHelper.setCustomDelimiter(inputValue, delimiters);
+            expect(result).toEqual(expectedSubstring);
+            expect(delimiters).toEqual(expectedDelimiters);
+        });
+
         it("Should return substring 1,3we4 with custom delimiter we and delimiter length should be 3", () => {
             const expectedDelimiters = ["\\\\n", ",", "we"];
             const expectedSubstring = "1,3we4";            
